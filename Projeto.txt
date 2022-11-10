@@ -1,0 +1,58 @@
+Definição do projeto desenvolvido no curso de lógica de programação
+
+Descrição: Aplicação para o gerenciamento de projetos e as tarefas envolvidas 
+nesses projetos
+
+Objetivo: Resolver a questão de organização de tarefas de um ou vários projetos
+
+Entidades: 
+
+* Projeto;
+    - Nome
+    - Descrição
+    - Data de criação
+    - Data de atualização
+* Tarefa;
+    - Nome
+    - Descrição
+    - Status
+    - Tags
+    - Observação
+    - Prazo
+    - Data de criação
+    - Data de atualização
+Resquisitos:
+* Permitir o cadastro de projeto;
+* Permitir alterar o projeto;
+* Permitir deleter o projeto
+* Permitir o cadastro de tarefas;
+* Permitir alterar a tarefa;
+* Permitir deleter a tarefas;
+
+Regras de negócio:
+
+* Não irá conter um sistema de login
+* Não haverá usuários
+* Toda tarefa deve pertencer a uma lista
+
+Tecnologias utilizadas:
+
+* Java
+* MySQL
+
+Tasks
+
+* Criação do banco de dados (OK)
+* Criação das classes do modelo (OK)
+* Criação da conexão com o banco de dados (OK)
+* Criação das classes de controle(Acesso ao banco de dados) (OK)
+* Criação da interface gráfica ()
+    * Criação da tela principal ()
+        * Criação do CellRenderer Prazo ()
+        * Criação do CellRenderer Editar e Deletar ()
+    * Criação da tela de cadastro de projetos ()
+    * Criação da tela de cadastro de tarefas ()
+* Implementação de eventos ()
+    * Validações ()
+* Ajustes finais ()
+* Testes ()
