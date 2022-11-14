@@ -1,13 +1,30 @@
 package view;
 
+import controller.ProjectController;
+import controller.TaskController;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import model.Project;
+import model.Task;
+import util.TaskTableModel;
 
 public class MainScreen extends javax.swing.JFrame {
+    TaskController taskController;
+    ProjectController projectController;
+    DefaultListModel projectsModel;
+    TaskTableModel tasksModel;
+    
     public MainScreen() {
         initComponents();
         decorateTableTask();
-        setLocationRelativeTo(null);
+        
+        initDataController();
+        initComponentsModel();
+        
         setVisible(true);
     }
     @SuppressWarnings("unchecked")
@@ -180,14 +197,8 @@ public class MainScreen extends javax.swing.JFrame {
         jPanelProjectsList.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(122, 138, 153)));
 
         jListProjects.setBackground(new java.awt.Color(36, 41, 46));
-        jListProjects.setBorder(null);
         jListProjects.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jListProjects.setForeground(new java.awt.Color(255, 255, 255));
-        jListProjects.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jListProjects.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListProjects.setSelectionBackground(new java.awt.Color(66, 125, 163));
         jListProjects.setSelectionForeground(new java.awt.Color(255, 255, 255));
@@ -242,6 +253,7 @@ public class MainScreen extends javax.swing.JFrame {
         jTableTasks.setRowHeight(30);
         jTableTasks.setSelectionBackground(new java.awt.Color(66, 125, 163));
         jTableTasks.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        jTableTasks.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPaneTasks.setViewportView(jTableTasks);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -305,13 +317,29 @@ public class MainScreen extends javax.swing.JFrame {
     private void jLabelProjectsAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProjectsAddMouseClicked
         ProjectDialogScreen projectDialogScreen = new ProjectDialogScreen(this, rootPaneCheckingEnabled);
         projectDialogScreen.setVisible(true);
+        
+        projectDialogScreen.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e){
+                loadProjects();
+            }
+        });
     }//GEN-LAST:event_jLabelProjectsAddMouseClicked
 
     private void jLabelTasksAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTasksAddMouseClicked
         TaskDialogScreen taskDialogScreen = new TaskDialogScreen(this, rootPaneCheckingEnabled);
         //Para a chave estrangeira
-        taskDialogScreen.setProject(null);
+        Project project = new Project();
+        project.setId(jListProjects.getSelectedIndex());
+        taskDialogScreen.setProject(project);
+        
         taskDialogScreen.setVisible(true);
+        taskDialogScreen.addWindowListener(new WindowAdapter(){
+           @Override
+           public void windowClosed(WindowEvent e){
+               loadProjects();
+           }
+        });
     }//GEN-LAST:event_jLabelTasksAddMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -348,7 +376,33 @@ public class MainScreen extends javax.swing.JFrame {
         //Tirando as bordas do jScrollPanes
         jScrollPaneTasks.setBorder(null);
         jScrollPaneProjects.setBorder(null);
+    }
+    public void initDataController(){
+        projectController = new ProjectController();
+        taskController = new TaskController();
+    }
+    public void initComponentsModel(){
+        projectsModel = new DefaultListModel<>();
+        loadProjects();
         
+        tasksModel = new TaskTableModel();
+        jTableTasks.setModel(tasksModel);
+        loadTasks(9);
+    }
+    public void loadTasks(int idProject){
+        List<Task> tasks = taskController.getAll(idProject);
+        tasksModel.setTasks(tasks);
+    }
+    public void loadProjects(){
+        List<Project> projects = projectController.getAll();
         
+        projectsModel.clear();
+        
+        for(int i = 0;i < projects.size();i++){
+            Project project = projects.get(i);
+            projectsModel.addElement(project);
+        }
+        
+        jListProjects.setModel(projectsModel);
     }
 }
