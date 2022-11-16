@@ -217,6 +217,7 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         try{
             Task task = new Task();
             task.setProjectId(project.getId());
+            
             task.setName(jTextFieldName.getText());
             task.setDescription(jTextAreaDescription.getText());
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -254,9 +255,4 @@ public class TaskDialogScreen extends javax.swing.JDialog {
     public void setProject(Project project) {
         this.project = project;
     }
-    
-
-
-
-
 }
