@@ -215,19 +215,24 @@ public class TaskDialogScreen extends javax.swing.JDialog {
 
     private void jLabelSaveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSaveMouseClicked
         try{
-            Task task = new Task();
-            task.setProjectId(project.getId());
-            
-            task.setName(jTextFieldName.getText());
-            task.setDescription(jTextAreaDescription.getText());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date deadLine = dateFormat.parse(jFormattedTextFieldDeadLine.getText());
-            task.setDeadLine(deadLine);
-            task.setNotes(jTextAreaNotes.getText());
-            
-            controller.save(task);
-            JOptionPane.showMessageDialog(jPanelContent, "Tarefa salva com sucesso!");
-            dispose();
+            if(!jTextFieldName.getText().isEmpty() && !jFormattedTextFieldDeadLine.getText().isEmpty()){
+                Task task = new Task();
+                task.setProjectId(project.getId());
+
+                task.setName(jTextFieldName.getText());
+                task.setDescription(jTextAreaDescription.getText());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date deadLine = dateFormat.parse(jFormattedTextFieldDeadLine.getText());
+                task.setDeadLine(deadLine);
+                task.setNotes(jTextAreaNotes.getText());
+
+                controller.save(task);
+                JOptionPane.showMessageDialog(jPanelContent, "Tarefa salva com sucesso!");
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(jPanelContent, 
+                        "A tarefa não foi salva pois existem campos obrigatórios que não foram preenchidos: nome, prazo!");
+            }
         }catch(Exception ex){
             System.err.println(ex);
             JOptionPane.showMessageDialog(jPanelContent, ex.getMessage());

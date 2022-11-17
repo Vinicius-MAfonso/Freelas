@@ -10,6 +10,8 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
 import model.Task;
+import util.ButtonColumnCellRender;
+import util.DeadlineColumnCellRender;
 import util.TaskTableModel;
 
 public class MainScreen extends javax.swing.JFrame {
@@ -20,10 +22,9 @@ public class MainScreen extends javax.swing.JFrame {
     
     public MainScreen() {
         initComponents();
-        decorateTableTask();
-        
         initDataController();
         initComponentsModel();
+        decorateTableTask();
         
         setVisible(true);
     }
@@ -407,6 +408,11 @@ public class MainScreen extends javax.swing.JFrame {
         //Tirando as bordas do jScrollPanes
         jScrollPaneTasks.setBorder(null);
         jScrollPaneProjects.setBorder(null);
+        jTableTasks.getColumnModel().getColumn(2).setCellRenderer(new DeadlineColumnCellRender());
+        
+        jTableTasks.getColumnModel().getColumn(4).setCellRenderer(new ButtonColumnCellRender("edit"));
+        jTableTasks.getColumnModel().getColumn(5).setCellRenderer(new ButtonColumnCellRender("delete"));
+        
     }
     public void initDataController(){
         projectController = new ProjectController();
