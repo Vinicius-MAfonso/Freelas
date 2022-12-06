@@ -356,7 +356,8 @@ public class MainScreen extends javax.swing.JFrame {
         switch (columnIndex) {
             case 3 -> taskController.update(task);
             case 4 -> {
-                
+                TaskDialogScreen taskDialogScreen = new TaskDialogScreen(this, rootPaneCheckingEnabled);
+                taskDialogScreen.setVisible(true);
             }
             case 5 -> {
                 taskController.removeById(task.getId());
