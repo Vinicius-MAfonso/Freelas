@@ -1,10 +1,6 @@
 model\Task.class
-view\CreateProjectFrame$2.class
-controller\ProjectController.class
-view\CreateProjectFrame.class
-view\CreateProjectFrame$1.class
 main\Freelas.class
-util\ConnectionFactory.class
-view\MainFrame.class
-model\Project.class
 controller\TaskController.class
+controller\ProjectController.class
+util\ConnectionFactory.class
+model\Project.class
